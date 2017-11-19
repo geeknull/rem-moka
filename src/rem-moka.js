@@ -1,4 +1,11 @@
-;(function(designWidth, oneRem2Px, resetScaleFontSizeToDefault, useScaleFix1pxTooBold) {
+;(function(params) {
+  var designWidth = params.designWidth;
+  var oneRem2Px = params.oneRem2Px;
+  var resetScaleFontSizeToDefault = params.resetScaleFontSizeToDefault;
+  var useScaleFix1pxTooBold = params.useScaleFix1pxTooBold;
+  var pcMaxPx = params.pcMaxPx;
+  var mobileMaxPx = params.mobileMaxPx;
+
   var win = window;
   var doc = win.document;
   var docEl = doc.documentElement;
@@ -6,6 +13,10 @@
   var dpr = 0;
   var scale = 0;
   var tid;
+
+  var isAndroid = win.navigator.appVersion.match(/android/gi);
+  var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+  var isIPad = win.navigator.appVersion.match(/ipad/gi);
 
   function get1remWidth () {
     var headEle = document.querySelector('head');
@@ -18,6 +29,7 @@
 
     return remWidth;
   }
+
   var systemDefault1rem2px = get1remWidth();
 
   var exportObj = {};
@@ -66,10 +78,11 @@
   function refreshRem(){
     var width = docEl.getBoundingClientRect().width;
 
-    if (width / dpr > 768) {
-      width = 768 * dpr;
-    }
+    var max = (isAndroid || isIPhone || isIPad) ? mobileMaxPx : pcMaxPx;
 
+    if (width / dpr > max) {
+      width = max * dpr;
+    }
 
     var rem = width / designWidth * oneRem2Px;
 
@@ -80,17 +93,6 @@
     }
 
     docEl.style.fontSize = rem + 'px';
-
-    // 通过字体大小比对修复，可能有些不准确
-    // var rem = width / designWidth * oneRem2Px;
-    // docEl.style.fontSize = rem + 'px';
-    // if ( resetScaleFontSizeToDefault ) { // 修复Android字体放大带来的副作用
-    //     var realitySize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
-    //     if (rem !== realitySize) {
-    //         rem = rem * rem / realitySize;
-    //         docEl.style.fontSize = rem + 'px';
-    //     }
-    // }
 
     exportObj.rem = rem;
   }
@@ -126,12 +128,20 @@
   };
 
   window.remmoka = exportObj;
-
-})(750, 100, true, true);
+})({
+  designWidth: 750,
+  oneRem2Px: 100,
+  resetScaleFontSizeToDefault: true,
+  useScaleFix1pxTooBold: true,
+  pcMaxPx: 256,
+  mobileMaxPx: 768
+});
 /*
  * designWidth, oneRem2Px, resetScaleFontSizeToDefault, useScaleFix1pxTooBold
  * @param designWidth 设计稿宽度 一般来说iPhone6是750 如果缩小就变成了375px
  * @param oneRem2Px 1rem对应多少px
  * @param resetScaleFontSizeToDefault 是否重置Android因为系统放大或者缩小字体带来的影响
  * @param useScaleFix1pxTooBold 是否通过meta标签的scale处理1px过于粗的问题
+ * @param pxMaxPx PC端最大像素数
+ * @param mobileMaxPx 移动端最大像素数
  * */

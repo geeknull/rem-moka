@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>REM-MOKA</title>
+    <script>
+        window.RectWidth = document.documentElement.getBoundingClientRect().width;
+    </script>
+    <script src="../src/rem-moka.js"></script>
+    <style>
+        #__bs_notify__ {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: .32rem;
+            color: #333;
+        }
+
+        .header {
+            height: 1rem;
+            line-height: 1rem;
+            background-color: lightsalmon;
+            color: #fff;
+            text-align: center;
+        }
+
+        .block-wrap {
+            margin-top: .2rem;
+            border: 1px solid lightsalmon;
+            padding: .2rem 0 0 .2rem;
+            clear: both;
+            overflow: hidden;
+        }
+        .block-item {
+            width: 1.24rem;
+            height: 1.24rem;
+            margin-right: .2rem;
+            margin-bottom: .2rem;
+            text-align: center;
+            line-height: 1.2rem;
+            border: 1px solid lightblue;
+            float: left;
+            color: #333;
+        }
+    </style>
+    <style>
+        table {
+            width: 100%;
+            table-layout:fixed;
+            margin-top: .2rem;
+            border:solid lightsalmon;
+            border-width: 1px 0 0 1px;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            width: 50%;
+            border: solid lightsalmon;
+            border-width: 0 1px 1px 0;
+            padding: .1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">REM-MOKA</header>
+    <div class="block-wrap">
+        <div class="block-item">1</div>
+        <div class="block-item">2</div>
+        <div class="block-item">3</div>
+        <div class="block-item">4</div>
+        <div class="block-item">5</div>
+        <div class="block-item">6</div>
+        <div class="block-item">7</div>
+        <div class="block-item">8</div>
+        <div class="block-item">9</div>
+        <div class="block-item">10</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>值</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>devicePixelRatio</td>
+                <td class="devicePixelRatio"></td>
+            </tr>
+            <tr>
+                <td>before:RectWidth</td>
+                <td class="before-RectWidth"></td>
+            </tr>
+            <tr>
+                <td>after:RectWidth</td>
+                <td class="after-RectWidth"></td>
+            </tr>
+            <tr>
+                <td>screen width</td>
+                <td class="screen"></td>
+            </tr>
+            <tr>
+                <td>availWidth width</td>
+                <td class="availWidth"></td>
+            </tr>
+            <tr>
+                <td>body.clientWidth</td>
+                <td class="clientWidth"></td>
+            </tr>
+            <tr>
+                <td>docEle.clientWidth</td>
+                <td class="docClientWidth"></td>
+            </tr>
+            <tr>
+                <td>docEle.clientWidth</td>
+                <td class="docClientWidth"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script>
+    document.querySelector('.devicePixelRatio').innerHTML = window.devicePixelRatio;
+    document.querySelector('.before-RectWidth').innerHTML = window.RectWidth;
+    document.querySelector('.after-RectWidth').innerHTML = document.documentElement.getBoundingClientRect().width;
+    document.querySelector('.screen').innerHTML = screen.width;
+    document.querySelector('.availWidth').innerHTML = screen.availWidth;
+    document.querySelector('.clientWidth').innerHTML = document.body.clientWidth;
+    document.querySelector('.docClientWidth').innerHTML = document.documentElement.clientWidth;
+</script>
+</html>
