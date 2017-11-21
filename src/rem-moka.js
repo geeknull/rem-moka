@@ -1,10 +1,12 @@
 ;(function(params) {
   var designWidth = params.designWidth;
   var oneRem2Px = params.oneRem2Px;
-  var resetScaleFontSizeToDefault = params.resetScaleFontSizeToDefault;
-  var useScaleFix1pxTooBold = params.useScaleFix1pxTooBold;
+  var fixDefaultFontSize = params.fixDefaultFontSize;
+  var fix1px = params.fix1px;
   var pcMaxPx = params.pcMaxPx;
   var mobileMaxPx = params.mobileMaxPx;
+  var resetPcDpr = params.resetPcDpr;
+  var resetPcWidth = params.resetPcWidth;
 
   var win = window;
   var doc = win.document;
@@ -17,6 +19,7 @@
   var isAndroid = win.navigator.appVersion.match(/android/gi);
   var isIPhone = win.navigator.appVersion.match(/iphone/gi);
   var isIPad = win.navigator.appVersion.match(/ipad/gi);
+  var isPC = !(isAndroid || isIPhone || isIPad);
 
   function get1remWidth () {
     var headEle = document.querySelector('head');
@@ -46,7 +49,7 @@
   if (!dpr && !scale) {
     var devicePixelRatio = win.devicePixelRatio;
 
-    if ( useScaleFix1pxTooBold ) {
+    if ( fix1px ) {
       if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
         dpr = 3;
       } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
@@ -58,6 +61,11 @@
     } else {
       dpr = 1;
       scale = 1 / dpr;
+    }
+
+    // PC端重置DPR
+    if (isPC && resetPcDpr) {
+      dpr = resetPcDpr; // 大多数情况建议重置为1
     }
   }
 
@@ -77,8 +85,11 @@
 
   function refreshRem(){
     var width = docEl.getBoundingClientRect().width;
+    if (isPC && resetPcWidth) {
+      width = resetPcWidth;
+    }
 
-    var max = (isAndroid || isIPhone || isIPad) ? mobileMaxPx : pcMaxPx;
+    var max = isPC ? pcMaxPx : mobileMaxPx;
 
     if (width / dpr > max) {
       width = max * dpr;
@@ -87,7 +98,7 @@
     var rem = width / designWidth * oneRem2Px;
 
     // 通过16px缩放比修复
-    if ( !resetScaleFontSizeToDefault ) {
+    if ( !fixDefaultFontSize ) {
       var scaleRate = systemDefault1rem2px / 16;
       rem = rem / scaleRate;
     }
@@ -131,17 +142,24 @@
 })({
   designWidth: 750,
   oneRem2Px: 100,
-  resetScaleFontSizeToDefault: true,
-  useScaleFix1pxTooBold: true,
-  pcMaxPx: 256,
-  mobileMaxPx: 768
+  mobileMaxPx: 768,
+
+  fixDefaultFontSize: true,
+  fix1px: true,
+
+  resetPcDpr: 1,
+  resetPcWidth: 375,
+  pcMaxPx: 1120
 });
 /*
- * designWidth, oneRem2Px, resetScaleFontSizeToDefault, useScaleFix1pxTooBold
  * @param designWidth 设计稿宽度 一般来说iPhone6是750 如果缩小就变成了375px
  * @param oneRem2Px 1rem对应多少px
- * @param resetScaleFontSizeToDefault 是否重置Android因为系统放大或者缩小字体带来的影响
- * @param useScaleFix1pxTooBold 是否通过meta标签的scale处理1px过于粗的问题
- * @param pxMaxPx PC端最大像素数
  * @param mobileMaxPx 移动端最大像素数
+ *
+ * @param fixDefaultFontSize 是否重置Android因为系统放大或者缩小字体带来的影响
+ * @param fix1px 是否通过meta标签的scale处理1px过于粗的问题
+ *
+ * @param resetPcDpr 重置PC端DPR
+ * @param resetPcWidth 重置PC端计算所用的视口宽度
+ * @param pxMaxPx PC端最大像素数
  * */
