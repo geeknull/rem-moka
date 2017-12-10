@@ -22,3 +22,9 @@ http://localhost:9998/demo/index.html
 http://localhost:9998/demo/norem.html
 
 可以查看使用了rem与没有使用rem的状态
+
+# 查看效果
+
+https://geeknull.github.io/rem-moka/demo/index.html
+
+https://geeknull.github.io/rem-moka/demo/norem.html

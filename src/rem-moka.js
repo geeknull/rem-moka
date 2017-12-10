@@ -138,11 +138,12 @@
     return val;
   };
 
+  exportObj.version = '0.3.0';
   window.remmoka = exportObj;
 })({
   designWidth: 750,
   oneRem2Px: 100,
-  mobileMaxPx: 768,
+  mobileMaxPx: 414,
 
   fixDefaultFontSize: true,
   fix1px: true,
