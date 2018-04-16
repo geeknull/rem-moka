@@ -98,7 +98,7 @@
     var rem = width / designWidth * oneRem2Px;
 
     // 通过16px缩放比修复
-    if ( !fixDefaultFontSize ) {
+    if ( fixDefaultFontSize ) {
       var scaleRate = systemDefault1rem2px / 16;
       rem = rem / scaleRate;
     }
