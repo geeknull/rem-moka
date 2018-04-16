@@ -15,7 +15,10 @@
  
 # 启动方式
 
-gulp
+```bash
+npm install
+npm run dev
+```
 
 http://localhost:9998/demo/index.html
 

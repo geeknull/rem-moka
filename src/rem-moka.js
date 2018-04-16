@@ -153,6 +153,8 @@
   pcMaxPx: 1120
 });
 /*
+ * https://github.com/geeknull/rem-moka
+ *
  * @param designWidth 设计稿宽度 一般来说iPhone6是750 如果缩小就变成了375px
  * @param oneRem2Px 1rem对应多少px
  * @param mobileMaxPx 移动端最大像素数
